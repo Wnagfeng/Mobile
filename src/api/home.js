@@ -23,6 +23,20 @@ export function getMenus() {
     method: 'get'
   })
 }
+//首页 精品推荐
+export function getBastList() {
+  return request({
+    url: '/index/bastList',
+    method: 'get'
+  })
+}
+//首页  猜你喜欢
+export function getLike() {
+  return request({
+    url: '/index/like',
+    method: 'get'
+  })
+}
 
 export default {
   getData,

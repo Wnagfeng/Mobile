@@ -4,7 +4,7 @@
  */
 export const constantRouterMap = [{
     path: '/',
-    component: () => import('@/views/layouts/index'),
+    component: () => import('../views/layouts/index.vue'),
     redirect: '/home',
     meta: {
         title: '首页',
@@ -14,7 +14,7 @@ export const constantRouterMap = [{
         {
             path: '/home',
             name: 'Home',
-            component: () => import('@/views/home/index'),
+            component: () => import('../views/home/index.vue'),
             meta: {
                 title: '首页',
                 keepAlive: false,
@@ -26,7 +26,7 @@ export const constantRouterMap = [{
         {
             path: '/register',
             name: 'Register',
-            component: () => import('@/views/home/register'),
+            component: () => import('../views/home/register.vue'),
             meta: {
                 title: '注册',
                 keepAlive: false,
@@ -37,7 +37,7 @@ export const constantRouterMap = [{
         {
             path: '/login',
             name: 'Login',
-            component: () => import('@/views/home/login'),
+            component: () => import('../views/home/login.vue'),
             meta: {
                 title: '登录',
                 keepAlive: false,
@@ -49,19 +49,19 @@ export const constantRouterMap = [{
         {
             path: '/userIndex',
             name: 'User',
-            component: () => import('@/views/user/index'),
+            component: () => import('../views/user/index.vue'),
             meta: {
                 title: '',
                 keepAlive: false,
                 tabBar: true,
                 navBar: false,
-                requireAuth: true
+                requireAuth: false
             }
         },
         {
             path: '/nullPage',
             name: 'NullPage',
-            component: () => import('@/views/home/nullPage'),
+            component: () => import('../views/home/nullPage.vue'),
             meta: {
                 title: '404',
                 keepAlive: false,
@@ -73,7 +73,7 @@ export const constantRouterMap = [{
         {
             path: '/productList',
             name: 'ProductList',
-            component: () => import('@/views/productList/productList'),
+            component: () => import('../views/productList/productList.vue'),
             meta: {
                 title: '商品列表',
                 keepAlive: false,
@@ -84,7 +84,7 @@ export const constantRouterMap = [{
         {
             path: '/productClassify',
             name: 'ProductClassify',
-            component: () => import('@/views/classify/productClassify'),
+            component: () => import('../views/classify/productClassify.vue'),
             meta: {
                 title: '商品分类',
                 keepAlive: false,
@@ -93,15 +93,15 @@ export const constantRouterMap = [{
             }
         },
         {
-            path: '/cart',
+            path: '/Cart',
             name: 'Cart',
-            component: () => import('@/views/cart/cart'),
+            component: () => import('../views/cart/cart.vue'),
             meta: {
                 title: '购物车',
                 keepAlive: false,
                 tabBar: false,
                 navBar: true,
-                requireAuth: true
+                requireAuth: false
             }
         }
     ]

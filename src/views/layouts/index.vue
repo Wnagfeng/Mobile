@@ -17,13 +17,13 @@
             <router-view v-else></router-view>
         </div>
         <div class='layout-footer' v-if='$route.meta.tabBar'>
-            <!-- <TabBar :data='tabbars' @change='handleChange' /> -->
+            <TabBar :data='tabbars' @change='handleChange' />
         </div>
     </div>
 </template>
 
 <script>
-//   import TabBar from '@/components/TabBar'
+import TabBar from '../../components/TabBar.vue'
 
 export default {
     name: 'AppLayout',
@@ -63,7 +63,7 @@ export default {
         }
     },
     components: {
-        //   TabBar
+        TabBar
     },
     methods: {
         go() {
@@ -75,6 +75,7 @@ export default {
         onClickRight() {
         },
         handleChange(v) {
+            console.log(v)
         }
     }
 }
