@@ -64,3 +64,41 @@ export function getLike() {
 }
 ```
 
+### 5.关于路由:sparkles:
+
+以下是你可能需要添加的路由：
+
+```js
+ // 自己添加的路由
+// 1.商品详情页面
+{
+    path: '/productDetails',
+    name: 'ProductDetails',
+    component: () => import('../views/productDetails/productDetails.vue'),
+    meta: {
+        title: '商品详情',
+        keepAlive: false,
+        tabBar: false,
+        navBar: true
+    }
+}
+```
+
+### 6.关于商品详情页面:rocket: ：​
+
+该页面中的选择商品规格有点小难度，主要是复杂在数据结构上，这里做出详细的解析：
+
+#### 6.1前置条件:bookmark:：
+
+想要明白这个规格是怎么实现的，首先你需要明白数据是如何处理的，我们需要处理为什么格式的数据等。
+
+在本项目下的 `ProductDetail.html` 中我做了详细的解析，包括过滤过程！建议看一看。
+
+#### 6.2详细解析:green_heart:：
+
+如果你已经明白了数据格式是如何过滤的，以及我们需要哪些数据格式，这里我对vant中的vant-sku组件做一个详细的解析，功能实现就问题就不大了！
+
+
+
+
+

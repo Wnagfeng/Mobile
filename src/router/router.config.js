@@ -103,6 +103,19 @@ export const constantRouterMap = [{
                 navBar: true,
                 requireAuth: false
             }
+        },
+        // 自己添加的路由
+        // 1.商品详情页面
+        {
+            path: '/productDetails',
+            name: 'ProductDetails',
+            component: () => import('../views/productDetails/productDetails.vue'),
+            meta: {
+                title: '商品详情',
+                keepAlive: false,
+                tabBar: false,
+                navBar: true
+            }
         }
     ]
 }]
