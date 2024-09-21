@@ -1,4 +1,5 @@
 //添加收藏
+import request from '../utils/request'
 export function collect(data) {
     return request({
         url: '/collect/add',

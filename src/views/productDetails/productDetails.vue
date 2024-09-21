@@ -88,7 +88,6 @@
 </template>
 
 <script>
-import { parseTime } from '../../utils/index.js'
 import { getProduct } from '../../api/product.js'
 import { addCart } from '../../api/cart.js'
 import { collect, delCollect } from '../../api/collect.js'
@@ -112,7 +111,9 @@ export default {
                 price: 1999,
                 sales: 100,
                 browse: 99,
-                storeInfo: "iPhone 16 Pro Max"
+                storeInfo: "iPhone 16 Pro Max",
+                description: "<img src='https://tse3-mm.cn.bing.net/th/id/OIP-C.1qr_4WiuuDW1P69jdMb8PQHaHa?rs=1&pid=ImgDetMain'></img><img src='https://tse3-mm.cn.bing.net/th/id/OIP-C.1qr_4WiuuDW1P69jdMb8PQHaHa?rs=1&pid=ImgDetMain'></img><img src='https://tse3-mm.cn.bing.net/th/id/OIP-C.1qr_4WiuuDW1P69jdMb8PQHaHa?rs=1&pid=ImgDetMain'></img><img src='https://tse3-mm.cn.bing.net/th/id/OIP-C.1qr_4WiuuDW1P69jdMb8PQHaHa?rs=1&pid=ImgDetMain'></img>",
+                userCollect: false,// 是否收藏
             }, // 商品信息
             chosenCoupon: -1,
             show: false,//控制sku的显隐
@@ -176,40 +177,47 @@ export default {
                 // 默认商品 sku 缩略图
                 picture: 'https://tse3-mm.cn.bing.net/th/id/OIP-C.azIej7bJLFwzUlD5Mb939gHaEK?rs=1&pid=ImgDetMain'
             },
-            imgUrls: this.$baseApi
+            imgUrls: "/api"
         }
     },
     created() {
-        this.index()
+        this.initPageData()//初始化数据与页面
         if (this.$route.query.integral) {
             this.integral = this.$route.query.integral
         }
     },
     filters: {
-        chageUrl: function (data, url) {
-            if (data) {
-                var a = data
-                var vm = this
-                var b = /<img [^>]*src=['"]([^'"]+)[^>]*>/g
-                var s = a.match(b)
+        // 处理图片url
+        chageUrl: function (htmlContent, baseUrl) {
+            if (htmlContent) {
+                var matchedImages = htmlContent
+                var vueInstance = this
+                // 匹配需要替换的url
+                var imgPattern = /<img [^>]*src=['"]([^'"]+)[^>]*>/g
+                var matchedStrings = matchedImages.match(imgPattern)
             }
-            if (s != null) {
-                for (var i = 0; i < s.length; i++) {
-                    var srcImg = s[i].replace(b, '$1').replace(/\s+/g, '')
-                    a = a.replace(new RegExp(srcImg, 'g'), url + srcImg)
+            if (matchedStrings != null) {
+                for (var i = 0; i < matchedStrings.length; i++) {
+                    var imageSrc = matchedStrings[i].replace(imgPattern, '$1').replace(/\s+/g, '')
+                    matchedImages = matchedImages.replace(new RegExp(imageSrc, 'g'), baseUrl + imageSrc)
                 }
             }
-            return a
+            console.log(matchedImages)
+            return matchedImages
+
         }
     },
     methods: {
-        // 收藏
+        // 收藏请求
         selectGoods() {
+            // 判断是否以及收藏了
             const data = this.product.userCollect
+            console.log("收藏了吗:", data)
             const params = {
                 id: this.$route.query.id,
                 category: 'collect'
             }
+            console.log("Collect params:", params)
             const callback = !data ? collect(params) : delCollect(params)
             callback.then(res => {
                 if (res.status === 200) {
@@ -218,11 +226,12 @@ export default {
                 }
             })
         },
+        // 轮播图change事件
         onChange(index) {
             this.current = index
         },
-
-        index() {
+        // 初始化数据和页面标题
+        initPageData() {
             getProduct(this.$route.query.id).then(res => {
                 if (res.status == 200) {
                     // 基础数据的赋值
@@ -279,12 +288,11 @@ export default {
                 this.integral = 'false'
             }
         },
-        parseTime,
         onBuyClicked(data) {
             addCart({
                 cartNum: data.selectedNum,
                 productId: this.$route.query.id,
-                uniqueId: data.selectedSkuComb.id,
+                uniqueId: data.selectedSkuComb.id,//skulist里面的套餐的唯一id
                 new: 0
             }).then(res => {
                 if (res.status == 200) {
@@ -308,6 +316,7 @@ export default {
                 }
             })
         },
+        // 处理选择规格
         onByselect(skuValue) {
             console.log(skuValue)
             let list = ''
@@ -320,6 +329,7 @@ export default {
             })
             this.skuValue = list
         },
+        // 加入购物车
         onAddCartClicked(data) {
             addCart({
                 cartNum: data.selectedNum,
@@ -360,6 +370,7 @@ export default {
 .warpper {
     background-color: #f8f8f8;
     padding: 8px;
+    padding-bottom: 50px;
 }
 
 .img {
