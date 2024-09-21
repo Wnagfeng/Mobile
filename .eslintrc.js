@@ -8,4 +8,6 @@ module.exports = {
     sourceType: 'module', // 支持 ES 模块
   },
   // 其他配置
+
+  "rules": {}
 };

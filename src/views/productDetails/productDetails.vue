@@ -289,39 +289,40 @@ export default {
             }
         },
         onBuyClicked(data) {
+            // 测试跳转 这行需要删除
             this.$router.push({
                 name: 'createOrder',
                 query: {
-                    ids: res.data.cartId,
-                    integral: 0
+                    ids: 1,
+                    integral: 1
                 }
             })
-            addCart({
-                cartNum: data.selectedNum,
-                productId: this.$route.query.id,
-                uniqueId: data.selectedSkuComb.id,//skulist里面的套餐的唯一id
-                new: 0
-            }).then(res => {
-                if (res.status == 200) {
-                    if (this.integral == 'true') {
-                        this.$router.push({
-                            name: 'CreationOrder',
-                            query: {
-                                ids: res.data.cartId,
-                                integral: 1
-                            }
-                        })
-                    } else {
-                        this.$router.push({
-                            name: 'CreationOrder',
-                            query: {
-                                ids: res.data.cartId,
-                                integral: 0
-                            }
-                        })
-                    }
-                }
-            })
+            // addCart({
+            //     cartNum: data.selectedNum,
+            //     productId: this.$route.query.id,
+            //     uniqueId: data.selectedSkuComb.id,//skulist里面的套餐的唯一id
+            //     new: 0
+            // }).then(res => {
+            //     if (res.status == 200) {
+            //         if (this.integral == 'true') {
+            //             this.$router.push({
+            //                 name: 'CreationOrder',
+            //                 query: {
+            //                     ids: res.data.cartId,
+            //                     integral: 1
+            //                 }
+            //             })
+            //         } else {
+            //             this.$router.push({
+            //                 name: 'CreationOrder',
+            //                 query: {
+            //                     ids: res.data.cartId,
+            //                     integral: 0
+            //                 }
+            //             })
+            //         }
+            //     }
+            // })
         },
         // 处理选择规格
         onByselect(skuValue) {

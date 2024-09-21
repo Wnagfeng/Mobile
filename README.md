@@ -47,6 +47,7 @@ vue create Pc
 以下是你可能需要自己添加的API请求：
 
 ```js
+//---------------------------------------------------------------------------------------------------
 // home.js
 //首页 精品推荐
 export function getBastList() {
@@ -61,6 +62,100 @@ export function getLike() {
 		url: '/index/like',
 		method: 'get'
 	})
+}
+
+//---------------------------------------------------------------------------------------------------
+//cart.js
+//加入购物车
+export function addCart(data) {
+    return request({
+        url: '/cart/add',
+        method: 'post',
+        data
+    })
+}
+//---------------------------------------------------------------------------------------------------
+//collect.js
+//添加收藏
+export function collect(data) {
+    return request({
+        url: '/collect/add',
+        method: 'post',
+        data
+
+    })
+}
+//删除收藏
+export function delCollect(data) {
+    return request({
+        url: '/collect/del',
+        method: 'post',
+        data
+
+    })
+}
+//---------------------------------------------------------------------------------------------------
+//product.js
+//获取商品详情
+export function getProduct(data) {
+    return request({
+        url: '/product/detail/' + data,
+        method: 'get'
+    })
+}
+//---------------------------------------------------------------------------------------------------
+//address.js
+// 获取地址列表
+export function getAddress(data) {
+	return request({
+		url: '/address/list',
+		method: 'get',
+		params: data
+	})
+}
+//---------------------------------------------------------------------------------------------------
+//order.js
+//获取订单列表
+export function getOrderList(data) {
+    return request({
+        url: '/order/list',
+        method: 'get',
+        params: data
+    })
+}
+//计算订单金额
+export function getOrderSum(data) {
+    return request({
+        url: '/order/computed/' + data.key,
+        method: 'post',
+        data
+    })
+}
+//创建订单信息
+export function createOrder(data) {
+	return request({
+		url: '/order/create/' + data.key,
+		method: 'post',
+		data
+	})
+}
+//订单确认
+export function getOrderInfo(data) {
+    return request({
+        url: '/order/confirm',
+        method: 'post',
+        data
+    })
+}
+//---------------------------------------------------------------------------------------------------
+//discount.js
+//获取订单优惠券
+export function getOrderCoupons(data) {
+    return request({
+        url: '/coupons/order/' + data,
+        method: 'get'
+
+    })
 }
 ```
 
@@ -82,6 +177,19 @@ export function getLike() {
         navBar: true
     }
 }
+// 2.创建订单页面
+{
+    path: '/createOrder',
+    name: 'createOrder',
+    component: () => import('../views/order/createOrder.vue'),
+    meta: {
+        title: '创建订单',
+        keepAlive: false,
+        tabBar: false,
+        navBar: true,
+        requireAuth: false
+    }
+},
 ```
 
 ### 6.关于商品详情页面:rocket: ：​
@@ -96,9 +204,13 @@ export function getLike() {
 
 #### 6.2详细解析:green_heart:：
 
-如果你已经明白了数据格式是如何过滤的，以及我们需要哪些数据格式，这里我对vant中的vant-sku组件做一个详细的解析，功能实现就问题就不大了！
+如果你已经明白了数据格式是如何过滤的，以及我们需要哪些数据格式，这里我对`vant`中的`vant-sku`组件做一个详细的解析，功能实现就问题就不大了！
 
-规格的选择本质上就是对数据的对应处理，比如我当前有两个套餐，8+128 12+512 套餐 加上颜色的套餐，最终他是在sku这个对象中的list中过滤出符合这个套餐的 库存 单价等各种数据，然后统一发送给后端做处理。
+规格的选择本质上就是对数据的对应处理，比如我当前有两个套餐，8+128 12+512 套餐 加上颜色的套餐，最终他是在`sku`这个对象中的list中过滤出符合这个套餐的 库存 单价等各种数据，然后统一发送给后端做处理。
 
+### 7.关于`eslint`
 
+由于该项目中使用了不知名的屎山代码，我只能禁用所有的规则了
+
+我在`.eslintignore` 下面添加了 `src/*` 规则禁用了所有的`src`下面的规则检查
 

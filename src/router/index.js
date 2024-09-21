@@ -20,14 +20,14 @@ const createRouter = () =>
 const router = createRouter()
 router.beforeEach((to, from, next) => {
     if (to.matched.some(r => r.meta.requireAuth)) {
-        // if (Cookies.get('Token')) {
-        //     next();
-        // } else {
-        //     next({
-        //         path: '/login',
-        //         query: { redirect: to.fullPath }
-        //     })
-        // }
+        if (Cookies.get('Token')) {
+            next();
+        } else {
+            next({
+                path: '/login',
+                query: { redirect: to.fullPath }
+            })
+        }
     } else {
         next();
     }

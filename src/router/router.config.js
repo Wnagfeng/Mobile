@@ -127,7 +127,7 @@ export const constantRouterMap = [{
                 keepAlive: false,
                 tabBar: false,
                 navBar: true,
-                requireAuth: true
+                requireAuth: false
             }
         },
 
