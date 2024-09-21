@@ -50,7 +50,7 @@
                             <span class="van-sku__price-symbol" v-if="integral == 'true'">积分</span>
                             <span class="van-sku__price-num" v-if="integral == 'true' && props.selectedSkuComb">{{
                                 props.selectedSkuComb.integral
-                                }}</span>
+                            }}</span>
                             <span class="van-sku__price-num"
                                 v-if="integral == 'true' && props.selectedSkuComb == null">{{
                                     props.price
@@ -289,6 +289,13 @@ export default {
             }
         },
         onBuyClicked(data) {
+            this.$router.push({
+                name: 'createOrder',
+                query: {
+                    ids: res.data.cartId,
+                    integral: 0
+                }
+            })
             addCart({
                 cartNum: data.selectedNum,
                 productId: this.$route.query.id,

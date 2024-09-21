@@ -116,6 +116,20 @@ export const constantRouterMap = [{
                 tabBar: false,
                 navBar: true
             }
-        }
+        },
+        // 2.创建订单页面
+        {
+            path: '/createOrder',
+            name: 'createOrder',
+            component: () => import('../views/order/createOrder.vue'),
+            meta: {
+                title: '创建订单',
+                keepAlive: false,
+                tabBar: false,
+                navBar: true,
+                requireAuth: true
+            }
+        },
+
     ]
 }]
