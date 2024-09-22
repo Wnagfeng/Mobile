@@ -74,6 +74,29 @@ export function addCart(data) {
         data
     })
 }
+//查询订单和购物车列表
+export function getCartList(data) {
+    return request({
+        url: '/cart/list',
+        method: 'get',
+        params: data
+    })
+}
+//修改购物车
+export function upCartNum(data) {
+    return request({
+        url: '/cart/num',
+        method: 'post',
+        data
+    })
+}
+export function delCart(data) {
+	return request({
+		url: '/cart/del',
+		method: 'post',
+		data
+	})
+}
 //---------------------------------------------------------------------------------------------------
 //collect.js
 //添加收藏
