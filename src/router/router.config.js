@@ -130,6 +130,19 @@ export const constantRouterMap = [{
                 requireAuth: false
             }
         },
+        // 3.搜索页面
+        {
+            path: '/search',
+            name: 'Search',
+            component: () => import('../views/home/search.vue'),
+            meta: {
+                title: '搜索',
+                keepAlive: false,
+                tabBar: true,
+                navBar: false
+            }
+        },
+
 
     ]
 }]

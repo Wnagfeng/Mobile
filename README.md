@@ -157,6 +157,25 @@ export function getOrderCoupons(data) {
 
     })
 }
+//---------------------------------------------------------------------------------------------------
+//search.js
+//查询热门关键字
+export function getSearchKeyword(data) {
+    return request({
+        url: '/search/keyword',
+        method: 'get',
+        params: data
+    })
+}
+
+//搜索商品
+export function products(data) {
+    return request({
+        url: '/products',
+        method: 'get',
+        params: data
+    })
+}
 ```
 
 ### 5.关于路由:sparkles:
@@ -190,6 +209,19 @@ export function getOrderCoupons(data) {
         requireAuth: false
     }
 },
+// 3.搜索页面
+{
+    path: '/search',
+    name: 'Search',
+    component: () => import('../views/home/search.vue'),
+    meta: {
+        title: '搜索',
+        keepAlive: false,
+        tabBar: true,
+        navBar: false
+    }
+},
+    
 ```
 
 ### 6.关于商品详情页面:rocket: ：​

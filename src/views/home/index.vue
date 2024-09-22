@@ -3,7 +3,7 @@
     <div>
         <div class='warpper'>
             <van-sticky :offset-top='0'>
-                <van-search background='#fff' shape='round' placeholder='请输入搜索关键词' />
+                <van-search background='#fff' shape='round' placeholder='请输入搜索关键词' @focus="onfocus" />
             </van-sticky>
             <!-- 搜索end -->
             <van-swipe :autoplay='3000' class='my-swipe' style='margin-top: 5px;'>
@@ -244,6 +244,10 @@ export default {
             getLike().then(res => {
                 this.userLike = res.data
             })
+        },
+        // 搜索
+        onfocus() {
+            this.$router.push('/search')
         }
     }
 }
