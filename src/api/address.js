@@ -15,13 +15,14 @@ export function getAddress(data) {
 		params: data
 	})
 }
-
+//获取地址详情
 export function getDataDetails(data) {
 	return request({
 		url: '/address/detail/' + data.id,
 		method: 'get'
 	})
 }
+// 删除地址
 export function delAddress(data) {
 	return request({
 		url: '/address/del',
