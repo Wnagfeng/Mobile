@@ -6,3 +6,12 @@ export function getProduct(data) {
         method: 'get'
     })
 }
+
+//获取商品列表
+export function getProductList(data) {
+    return request({
+        url: '/products',
+        method: 'get',
+        params: data
+    })
+}

@@ -92,7 +92,7 @@ export default {
                     id: 1,
                     pic: "https://pic.616pic.com/ys_bnew_img/00/22/68/gHR9fEBhr0.jpg",
                     name: "全部商品",
-                    url: ""
+                    url: "/productList"
                 },
                 {
                     id: 2,

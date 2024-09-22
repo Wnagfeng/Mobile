@@ -142,6 +142,19 @@ export const constantRouterMap = [{
                 navBar: false
             }
         },
+        // 4.全部商品页面
+        {
+            path: '/productList',
+            name: 'ProductList',
+            component: () => import('../views/productList/productList.vue'),
+            meta: {
+                title: '商品列表',
+                keepAlive: false,
+                tabBar: true,
+                navBar: true
+            }
+        },
+
 
 
     ]
