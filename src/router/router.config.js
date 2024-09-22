@@ -167,6 +167,19 @@ export const constantRouterMap = [{
                 requireAuth: false
             }
         },
+        // 6.我的收藏和足迹页面
+        {
+            path: '/collect',
+            name: 'Collect',
+            component: () => import('../views/collect/collect.vue'),
+            meta: {
+                title: '我的收藏',
+                keepAlive: false,
+                tabBar: false,
+                navBar: true,
+                requireAuth: false //是否需要登录才能进
+            }
+        },
 
 
     ]
