@@ -199,6 +199,16 @@ export function products(data) {
         params: data
     })
 }
+//---------------------------------------------------------------------------------------------------
+//productClassify.js
+// 获取分类
+export function getData() {
+    return request({
+        url: '/category',
+        method: 'get'
+    })
+}
+
 ```
 
 ### 5.关于路由:sparkles:
