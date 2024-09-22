@@ -180,6 +180,32 @@ export const constantRouterMap = [{
                 requireAuth: false //是否需要登录才能进
             }
         },
+        // 7.添加地址页面
+        {
+            path: '/contactList',
+            name: 'ContactList',
+            component: () => import('@/views/contactList/contactList'),
+            meta: {
+                title: '联系人列表',
+                keepAlive: false,
+                tabBar: false,
+                navBar: true,
+                requireAuth: false
+            }
+        },
+        // 8.添加地址页面
+        {
+            path: '/newContact',
+            name: 'NewContact',
+            component: () => import('@/views/contactList/newContact'),
+            meta: {
+                title: '联系人',
+                keepAlive: false,
+                tabBar: false,
+                navBar: true,
+                requireAuth: false
+            }
+        },
 
 
     ]
