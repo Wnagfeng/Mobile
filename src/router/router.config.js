@@ -154,7 +154,19 @@ export const constantRouterMap = [{
                 navBar: true
             }
         },
-
+        // 5.我的钱包页面
+        {
+            path: '/wallet',
+            name: 'Wallet',
+            component: () => import('@/views/user/wallet'),
+            meta: {
+                title: '我的钱包',
+                keepAlive: false,
+                tabBar: true,
+                navBar: true,
+                requireAuth: false
+            }
+        },
 
 
     ]

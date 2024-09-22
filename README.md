@@ -262,6 +262,32 @@ export function getData() {
         navBar: false
     }
 },
+// 4.全部商品页面
+{
+    path: '/productList',
+    name: 'ProductList',
+    component: () => import('../views/productList/productList.vue'),
+    meta: {
+        title: '商品列表',
+        keepAlive: false,
+        tabBar: true,
+        navBar: true
+    }
+},
+// 5.我的钱包页面
+{
+    path: '/wallet',
+    name: 'Wallet',
+    component: () => import('@/views/user/wallet'),
+    meta: {
+        title: '我的钱包',
+        keepAlive: false,
+        tabBar: true,
+        navBar: true,
+        requireAuth: true
+    }
+},
+
     
 ```
 
