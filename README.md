@@ -353,6 +353,19 @@ export function getData() {
         requireAuth: false
     }
 },
+// 9.订单详情页面
+{
+    path: '/orderDetail',
+    name: 'OrderDetail',
+    component: () => import('@/views/order/orderDetail'),
+    meta: {
+        title: '订单',
+        keepAlive: false,
+        tabBar: true,
+        navBar: true,
+        requireAuth: false
+    }
+},
     
 ```
 

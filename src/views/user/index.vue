@@ -53,31 +53,31 @@
         </div>
         <div class="grid">
             <van-grid :column-num="5" square :border="false">
-                <van-grid-item to="/orderType?type=0">
+                <van-grid-item to="/orderDetail?type=0">
                     <van-icon name="shop-o" size="30" />
                     <span>
                         <font size="2">未支付</font>
                     </span>
                 </van-grid-item>
-                <van-grid-item to="/orderType?type=1">
+                <van-grid-item to="/orderDetail?type=1">
                     <van-icon name="logistics" size="30" />
                     <span>
                         <font size="2">待发货</font>
                     </span>
                 </van-grid-item>
-                <van-grid-item to="/orderType?type=2">
+                <van-grid-item to="/orderDetail?type=2">
                     <van-icon name="goods-collect-o" size="30" />
                     <span>
                         <font size="2">待收货</font>
                     </span>
                 </van-grid-item>
-                <van-grid-item to="/orderType?type=3">
+                <van-grid-item to="/orderDetail?type=3">
                     <van-icon name="cart-o" size="30" />
                     <span>
                         <font size="2">待评价</font>
                     </span>
                 </van-grid-item>
-                <van-grid-item to="/orderType?type=4">
+                <van-grid-item to="/orderDetail?type=4">
                     <van-icon name="cart-o" size="30" />
                     <span>
                         <font size="2">已完成</font>

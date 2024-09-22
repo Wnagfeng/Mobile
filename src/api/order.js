@@ -31,3 +31,36 @@ export function getOrderInfo(data) {
         data
     })
 }
+// 订单详情
+//取消订单
+export function cancelOrder(data) {
+    return request({
+        url: '/order/cancel',
+        method: 'post',
+        data
+    })
+}
+//订单支付
+export function payOrder(data) {
+    return request({
+        url: '/order/pay',
+        method: 'post',
+        data
+    })
+}
+//订单收货
+export function takeOrder(data) {
+    return request({
+        url: '/order/take',
+        method: 'post',
+        data
+    })
+}
+//订单del
+export function delOrder(data) {
+    return request({
+        url: '/order/del',
+        method: 'post',
+        data
+    })
+}
