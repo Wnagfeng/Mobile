@@ -218,6 +218,14 @@ export function getOrderInfo(data) {
         data
     })
 }
+// 订单详情
+export function order(data) {
+    return request({
+        url: '/order/detail/' + data,
+        method: 'get'
+
+    })
+}
 //---------------------------------------------------------------------------------------------------
 //discount.js
 //获取订单优惠券
@@ -364,7 +372,19 @@ meta: {
     tabBar: true,
     navBar: true,
     requireAuth: false
-}
+},
+// 10.订单详情页面
+{
+    path: '/orderDetail',
+    name: 'OrderDetail',
+    component: () => import('../views/order/orderDetail.vue'),
+    meta: {
+        title: '订单详情',
+        keepAlive: false,
+        tabBar: false,
+        navBar: true,
+        requireAuth: false
+    }
 },
 ```
 

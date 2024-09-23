@@ -31,7 +31,7 @@ export function getOrderInfo(data) {
         data
     })
 }
-// 订单详情
+// 订单state页面
 //取消订单
 export function cancelOrder(data) {
     return request({
@@ -64,7 +64,7 @@ export function delOrder(data) {
         data
     })
 }
-
+// 订单详情
 export function order(data) {
     return request({
         url: '/order/detail/' + data,
