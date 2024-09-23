@@ -64,3 +64,11 @@ export function delOrder(data) {
         data
     })
 }
+
+export function order(data) {
+    return request({
+        url: '/order/detail/' + data,
+        method: 'get'
+
+    })
+}

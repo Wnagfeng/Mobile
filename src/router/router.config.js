@@ -206,11 +206,11 @@ export const constantRouterMap = [{
                 requireAuth: false
             }
         },
-        // 9.订单详情页面
+        // 9.订单orderSatus页面
         {
-            path: '/orderDetail',
-            name: 'OrderDetail',
-            component: () => import('@/views/order/orderDetail'),
+            path: '/orderSatus',
+            name: 'OrderSatus',
+            component: () => import('@/views/order/orderSatus'),
             meta: {
                 title: '订单',
                 keepAlive: false,
@@ -219,7 +219,19 @@ export const constantRouterMap = [{
                 requireAuth: false
             }
         },
-
+        // 10.订单详情页面
+        {
+            path: '/orderDetail',
+            name: 'OrderDetail',
+            component: () => import('../views/order/orderDetail.vue'),
+            meta: {
+                title: '订单详情',
+                keepAlive: false,
+                tabBar: false,
+                navBar: true,
+                requireAuth: false
+            }
+        },
 
     ]
 }]

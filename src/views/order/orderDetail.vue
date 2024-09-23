@@ -1,294 +1,162 @@
 <template>
-    <div>
-        <van-tabs v-model="activeName" @click="onClick" sticky>
-            <template v-for="nav in navList">
-                <van-tab :title="nav.text" :name="nav.status">
-                    <!-- 判断是否为空 -->
-                    <template v-if="orderList.length > 0">
-                        <div class="order" v-for="(item, index) in orderList" :key="index">
-                            <template v-for="cartItem in item.cartInfo">
-                                <!-- 是否渲染评论 -->
-                                <van-cell :title="item.createTime" :border="false" :value="nav.text"
-                                    v-if="cartItem.isReply == 0" />
-                                <!-- 不需要渲染评论 -->
-                                <van-cell :title="item.createTime" :border="false" value=" " v-else />
-                                <van-card style="background-color: #FFFFFF;" :num="cartItem.cartNum"
-                                    :price="item.payPrice" :desc="cartItem.productInfo.storeInfo"
-                                    :title="cartItem.productInfo.storeName"
-                                    :thumb="imgUrls + cartItem.productInfo.image">
-                                    <template #price>
-                                        <!-- 是否为积分商品 -->
-                                        <span v-if="cartItem.productInfo.isIntegral == 1">
-                                            <font size="4" color="#ED6A0C">{{ cartItem.productInfo.attrInfo.integral }}
-                                            </font>
-                                            <font size="3" color="#ED6A0C">积分</font>
-                                        </span>
-                                        <!-- 不是积分商品 -->
-                                        <span v-else>
-                                            <font size="3" color="#ED6A0C" v-if="item.combinationId == 0">￥</font>
-                                            <font size="3" color="#ED6A0C" v-if="item.combinationId != 0">团购价￥</font>
-                                            <font size="4" color="#ED6A0C">{{ cartItem.truePrice }}</font>
-                                        </span>
-                                    </template>
-                                    <template #tags>
-                                        <van-tag plain type="danger">{{ cartItem.productInfo.attrInfo.sku }}</van-tag>
-                                    </template>
-                                    <template #footer>
-                                        <!-- 根据01234 显示不同的按钮 -->
-                                         <!-- 点击立即付款把item赋值给payInfo，show为true 做一下弹窗 -->
-                                        <van-button v-if="item.statusDto.type == 0" class="btn"
-                                            @click="payInfo = item; show = true">立即付款</van-button>
-                                        <van-button v-if="item.statusDto.type == 0" class="btn"
-                                            @click="cancelOrder(item.orderId)">取消订单</van-button>
-                                        <van-button v-if="item.combinationId != 0" class="btn"
-                                            :to="'/groupBookOk?groupId=' + item.pinkId">查看团购</van-button>
-                                        <van-button v-if="item.statusDto.type == 1" class="btn"
-                                            @click="$toast.success('已提醒卖家发货！')">提醒发货</van-button>
-                                        <van-button v-if="item.statusDto.type == 2" class="btn"
-                                            @click="takeOrder(item.orderId)">确认收货</van-button>
-                                        <van-button v-if="item.statusDto.type == 3" class="btn"
-                                            :to="'/review?unique=' + cartItem.unique">去评价</van-button>
-                                        <van-button class="btn" :to="'/order?key=' + item.unique">立即查看</van-button>
-                                        <van-button v-if="item.statusDto.type == 4" class="btn"
-                                            @click="delOrder(item.orderId)">删除订单</van-button>
-                                    </template>
-                                </van-card>
-                                <van-divider :style="{ width: 'calc(100% - 50px)', margin: '0 auto' }" />
-                            </template>
-                        </div>
-                        <van-divider v-if="orderList.length > 9" @click="move(nav.status)">点击加载更多</van-divider>
+    <div id="order">
+        <van-overlay :show="show">
+            <div class="wrapper" @click.stop>
+                <van-loading size="24px" color="#0094ff" vertical>加载中...</van-loading>
+            </div>
+        </van-overlay>
+        <div class="top">
+            <div v-if="orderDetail.statusDto" class="title">{{ orderDetail.statusDto.msg }}</div>
+            <div class="user_address">
+                <div style="font-size: 14px">
+                    <span style="margin-right: 10px">{{ orderDetail.realName }}</span><span>{{ orderDetail.userPhone
+                        }}</span>
+                </div>
+                <div style="margin-top: 10px; color: #999">
+                    {{ orderDetail.userAddress }}
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <van-cell v-if="orderDetail.statusDto" title="订单状态" :value="orderDetail.statusDto.title" />
+            <div class="order_list">
+                <van-card v-for="item in orderDetail.cartInfo" :key="item.id" :num="item.cartNum"
+                    :desc="item.productInfo.storeInfo" :title="item.productInfo.storeName"
+                    :thumb="$baseApi + item.productInfo.image">
+                    <template #tags>
+                        <van-tag plain type="danger">{{ item.productInfo.attrInfo.sku }}</van-tag>
                     </template>
-                    <template v-else>
-                        <van-empty description="空空如也!" />
-                    </template>
-                </van-tab>
-            </template>
-        </van-tabs>
-
-
-        <van-popup v-model="show" round position="bottom" :style="{ height: '30%' }">
-            <!-- 使用余额支付 -->
-            <van-radio-group v-model="radio" v-if="payInfo.payIntegral == 0">
-                <van-cell center icon="shop-o">
-                    <template #title>
-                        <span class="custom-title">余额</span>
-                    </template>
-                    <template #label>
-                        <span class="custom-title">￥{{ userAccount.nowMoney }}</span>
-                    </template>
-                    <template #right-icon>
-                        <van-radio name="1"></van-radio>
-                    </template>
-                </van-cell>
-                <van-cell center icon="shop-o">
-                    <template #title>
-                        <span class="custom-title">微信</span>
-                    </template>
-                    <template #label>
-                        <span class="custom-title">暂未开通</span>
-                    </template>
-                    <template #right-icon>
-                        <van-radio name="1" disabled></van-radio>
-                    </template>
-                </van-cell>
-            </van-radio-group>
-            <!-- 使用积分支付 -->
-            <van-radio-group v-model="radio" v-else>
-                <van-cell center icon="shop-o">
-                    <!-- 使用 right-icon 插槽来自定义右侧图标 -->
-                    <template #title>
-                        <span class="custom-title">积分支付</span>
-                    </template>
-                    <template #right-icon>
-                        <van-radio name="1"></van-radio>
-                    </template>
-                </van-cell>
-            </van-radio-group>
-            <van-button block type="danger" class="btns" @click="pay()">确定</van-button>
-        </van-popup>
-
+                    <template #price> ￥{{ item.productInfo.price }} </template>
+                </van-card>
+            </div>
+            <van-cell title="快递" :value="orderDetail.deliveryName" />
+            <van-cell title="订单号" :value="orderDetail.orderId" />
+            <van-cell title="下单时间" :value="orderDetail.payTime" />
+            <van-cell title="运费" :value="orderDetail.freightPrice || '免运费'" />
+            <van-cell title="优惠" :value="orderDetail.couponPrice || '无优惠'" />
+            <van-cell title="总金额" :value="orderDetail.payPrice" />
+            <van-cell v-if="orderDetail.statusDto" title="支付方式" :value="orderDetail.statusDto.payType" />
+        </div>
     </div>
 </template>
-
 <script>
-import {
-    getOrderList,
-    cancelOrder,
-    payOrder,
-    takeOrder,
-    delOrder
-} from "@/api/order.js"
-import {
-    getBalance
-} from "@/api/wallet.js"
+import { Loading } from 'vant'
+import { Overlay } from 'vant'
+import { order } from '../../api/order'
 export default {
+    // 注册Loading组件
+    components: { [Loading.name]: Loading, [Overlay.name]: Overlay },
     data() {
         return {
-            userAccount: {
-                nowMoney: 1999,
-            },
-            imgUrls: this.$baseApi,
-            radio: "1",
-            status: 0,
-            show: false,
-            navList: [{
-                status: 0,
-                text: "待付款",
-            },
-            {
-                status: 1,
-                text: "待发货",
-            },
-            {
-                status: 2,
-                text: "待收货",
-            },
-            {
-                status: 3,
-                text: "待评价",
-            },
-            {
-                status: 4,
-                text: "已完成",
-            },
-            ],
-            activeName: this.$route.query.type * 1,
-            limit: 0,
-            orderList: [
-                {
-                    orderId: 1,
-                    createDate: "2021-01-01 12:00:00",
-                    payPrice: 100,
-                    statusDto: {
-                        type: 0
-                    },
-                    combinationId: 0,
-                    payIntegral: 0,
-                    isIntegral: 0,
-                    cartInfo: [
-                        {
-                            cartNum: 1,
-                            truePrice: 100,
-                            productInfo: {
-                                storeName: "测试店铺",
-                                storeInfo: "测试地址",
-                                image: "https://img.yzcdn.cn/upload_files/2019/08/13/5d50d9d5a1d5d9d5.jpg",
-                                isIntegral: 0,
-                                payIntegral: 0,
-                                attrInfo: {
-                                    sku: "123456"
-                                }
-                            }
+            // 订单详情数据
+            orderDetail: {
+                realName: '张三',
+                userPhone: '13800138000',
+                userAddress: '广州市天河区',
+                // 模拟数据
+                statusDto: {
+                    title: '待付款',
+                    payType: '微信支付'
+                },
+                cartInfo: [
+                    {
+                        id: 1,
+                        cartNum: 1,
+                        productInfo: {
+                            storeInfo: '广州市天河区',
+                            storeName: '广州市天河区第一商场',
+                            image: 'https://img.yzcdn.cn/public_files/2019/07/16/f1a7d9d9c7d94d5d8d5d.jpg',
+                            attrInfo: {
+                                sku: '123456'
+                            },
+                            price: 100
                         }
-                    ]
-
-
-                }
-            ],
-            payInfo: {
-            }
-        };
-    },
-    created() {
-        this.getList(this.$route.query.type)
-        this.getBalance()
-    },
-    methods: {
-        //收货
-        takeOrder(id) {
-            takeOrder({
-                uni: id
-            }).then(res => {
-                if (res.status == 200) {
-                    this.$toast.success("收货成功")
-                    this.activeName = 3
-                    this.getList(this.activeName)
-                }
-            })
-        },
-        //我的钱包数据
-        getBalance() {
-            getBalance().then(res => {
-                this.userAccount = res.data
-            })
-        },
-        pay() {
-            payOrder({
-                uni: this.payInfo.orderId,
-                from: 'h5',
-                paytype: this.payInfo.payIntegral == 0 ? 'yue' : 'integral'
-            }).then(res => {
-                if (res.status == 200) {
-                    this.$toast.success("支付成功")
-                    this.getList(this.$route.query.type)
-                    this.show = false
-                }
-            })
-
-
-        },
-        //取消订单
-        cancelOrder(id) {
-            cancelOrder({
-                id: id
-            }).then(res => {
-                if (res.status == 200) {
-                    this.$toast.success("取消成功")
-                    this.getList(this.$route.query.type)
-                }
-            })
-        },
-        delOrder(id) {
-            delOrder({
-                uni: id
-            }).then(res => {
-                if (res.status == 200) {
-                    this.$toast.success("删除成功")
-                    this.getList(this.$route.query.type)
-                }
-            })
-        },
-
-        //name为van-tab的name
-        onClick(name, title) {
-            this.getList(name)
-        },
-        getList(name, limit) {
-            getOrderList({
-                type: name,
-                limit: limit
-            }).then(res => {
-                this.orderList = res.data.content
-            })
-        },
-        move(type) {
-            if (this.status == type) {
-                this.limit += 10
-            } else {
-                this.limit = 0
-                this.limit += 10
-            }
-            this.status = type
-            this.limit += 10
-            this.getList(type, this.limit)
+                    },
+                    {
+                        id: 2,
+                        cartNum: 2,
+                        productInfo: {
+                            storeInfo: '广州市天河区',
+                            storeName: '广州市天河区第二商场',
+                            image: 'https://img.yzcdn.cn/public_files/2019/07/16/f1a7d9d9c7d94d5d8d5d.jpg',
+                            attrInfo: {
+                                sku: '123456'
+                            },
+                            price: 100
+                        }
+                    }
+                ],
+                deliveryName: '顺丰快递',
+                orderId: '201907161010100001',
+                payTime: '2019-07-16 10:10:10',
+                freightPrice: 0,
+                couponPrice: 0,
+                payPrice: 200
+            },
+            show: true
         }
     },
-};
+    methods: {
+        // 获取数据
+        getOrderDetail() {
+            this.show = false
+            order(this.$route.query.key).then(res => {
+                this.show = false
+                if (res.status === 200) {
+                    this.orderDetail = res.data
+                }
+            })
+        }
+    },
+    created() { },
+    mounted() {
+        if (!this.$route.query.key) {
+            this.$router.push('/')
+        }
+
+        this.getOrderDetail()
+    }
+}
 </script>
+<style lang="scss" scoped>
+#order {
+    .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
 
-<style scoped>
-.order {
-    margin-top: 10px;
-    background-color: #FFFFFF;
-}
+    .top {
+        background: url('../../static/userBg.png') no-repeat center center;
+        height: 90px;
 
-.order .btn {
-    height: 30px;
-    border-radius: 7px;
-}
+        .title {
+            line-height: 90px;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+        }
 
-.btns {
-    width: calc(100% - 30px);
-    margin: 10px auto;
+        .user_address {
+            background-color: white;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+            transform: translateY(1px);
+            box-sizing: border-box;
+            padding: 15px;
+        }
+    }
+
+    .content {
+        margin-top: 10px;
+
+        .order_list {
+            /deep/ .van-card__price {
+                color: #ed6a0c;
+                font-size: 18px;
+            }
+        }
+    }
 }
 </style>

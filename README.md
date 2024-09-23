@@ -353,20 +353,19 @@ export function getData() {
         requireAuth: false
     }
 },
-// 9.订单详情页面
+// 9.订单页面
 {
-    path: '/orderDetail',
-    name: 'OrderDetail',
-    component: () => import('@/views/order/orderDetail'),
-    meta: {
-        title: '订单',
-        keepAlive: false,
-        tabBar: true,
-        navBar: true,
-        requireAuth: false
-    }
+path: '/orderSatus',
+name: 'OrderSatus',
+component: () => import('@/views/order/orderSatus'),
+meta: {
+    title: '订单',
+    keepAlive: false,
+    tabBar: true,
+    navBar: true,
+    requireAuth: false
+}
 },
-    
 ```
 
 ### 6.关于商品详情页面:rocket: ：​
