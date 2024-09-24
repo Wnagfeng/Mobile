@@ -6,7 +6,7 @@
 </template>
 
 <script>
-
+import { getAnalysisData } from '../../api/analysis'
 
 export default {
     name: 'analysis',
@@ -68,6 +68,12 @@ export default {
     },
     mounted() {
         this.initDom()
+        getAnalysisData().then(res => {
+            if (res.code == 200) {
+                this.piedata = res.data.piedata
+                this.radardata = res.data.radardata
+            }
+        })
     },
     methods: {
         // 初始化dom
