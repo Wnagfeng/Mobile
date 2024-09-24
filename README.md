@@ -445,13 +445,13 @@ meta: {
 ### 8.练习题汇总:alien:：
 
 * ①：移动商城实现首页精品推荐、猜你喜欢列表布局 :white_check_mark:
-*  ②：移动端个人中心实现地址管理功能:white_check_mark:
-* ③：移动端实现首页搜索功能 :white_check_mark:
-* ④：移动商城端实现商品列表功能 :white_check_mark:
+*  ②：移动端个人中心实现地址管理功能​ :white_check_mark:
+* ③：移动端实现首页搜索功能  :white_check_mark:
+* ④：移动商城端实现商品列表功能  :white_check_mark:
 * ⑤：移动商城实现个人中心消费分析(必考):white_check_mark:
 * ⑥：移动商城实现商品下单 :white_check_mark:
 * ⑦：移动商城实现购物车 :white_check_mark:
-* ⑧：完成我的钱包充值页面:white_check_mark:
-* ⑨：完成我的收藏和我的足迹页面:white_check_mark:
-*  ⑩：完成移动端订单详情，五种状态页面:white_check_mark:
+* ⑧：完成我的钱包充值页面​ :white_check_mark:
+* ⑨：完成我的收藏和我的足迹页面​ :white_check_mark:
+*  ⑩：完成移动端订单详情，五种状态页面 :white_check_mark:
 
