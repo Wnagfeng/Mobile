@@ -448,7 +448,7 @@ meta: {
 *  ②：移动端个人中心实现地址管理功能​ :white_check_mark:
 * ③：移动端实现首页搜索功能  :white_check_mark:
 * ④：移动商城端实现商品列表功能  :white_check_mark:
-* ⑤：移动商城实现个人中心消费分析(必考):white_check_mark:
+* ⑤：移动商城实现个人中心消费分析(必考) :white_check_mark:
 * ⑥：移动商城实现商品下单 :white_check_mark:
 * ⑦：移动商城实现购物车 :white_check_mark:
 * ⑧：完成我的钱包充值页面​ :white_check_mark:
