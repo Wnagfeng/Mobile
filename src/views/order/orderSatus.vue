@@ -162,7 +162,7 @@ export default {
                     createDate: "2021-01-01 12:00:00",
                     payPrice: 100,
                     statusDto: {
-                        type: 0
+                        type: 3
                     },
                     combinationId: 0,
                     payIntegral: 0,

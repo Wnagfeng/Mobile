@@ -10,6 +10,9 @@ import {
 import {
     baseApi
 } from './config/index'
+import * as echarts from 'echarts'
+
+Vue.prototype.$echarts = echarts
 Vue.prototype.$toast = Toast
 Vue.prototype.$baseApi = baseApi
 Vue.config.productionTip = false

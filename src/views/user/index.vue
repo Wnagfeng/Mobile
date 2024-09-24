@@ -90,7 +90,9 @@
             <van-cell is-link title="我的钱包" icon="paid" to="/wallet" />
             <van-cell is-link title="我的收藏" icon="goods-collect" to="/collect?type=collect" />
             <van-cell is-link title="我的足迹" icon="underway" to="/collect?type=foot" />
+            <van-cell is-link title="消费分析" icon="balance-list" to="/analysis" />
             <van-cell is-link title="修改密码" icon="setting" to="/rpwd" />
+
             <van-button block type="danger" style="margin-top: 15px;" @click="logout">退出登录</van-button>
         </div>
     </div>

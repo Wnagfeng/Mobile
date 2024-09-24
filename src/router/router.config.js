@@ -232,6 +232,32 @@ export const constantRouterMap = [{
                 requireAuth: false
             }
         },
+        // 11.订单支付成功页面
+        {
+            path: '/paySuccess',
+            name: 'PaySuccess',
+            component: () => import('@/views/order/paySuccess'),
+            meta: {
+                title: '支付成功',
+                keepAlive: false,
+                tabBar: false,
+                navBar: true,
+                requireAuth: false
+            }
+        },
+        // 12.消费分析页面
+        {
+            path: "/analysis",
+            name: "Analysis",
+            component: () => import("../views/analysis/analysis.vue"),
+            meta: {
+                title: "消费分析",
+                keepAlive: false,
+                tabBar: true,
+                navBar: true,
+                requireAuth: false
+            }
+        }
 
     ]
 }]
