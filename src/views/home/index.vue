@@ -10,7 +10,7 @@
                 <van-swipe-item v-for='(image, index) in slideshowList' :key='index'>
                     <!-- 替换url -->
                     <!-- <img v-lazy='imgUrls + image.pic' /> -->
-                    <img :src='image.pic' />
+                    <img :src='imgUrls+image.pic' />
                 </van-swipe-item>
             </van-swipe>
             <!-- 轮播图end -->
@@ -228,6 +228,7 @@ export default {
     },
     created() {
         this.getData()
+        console.log("this.$baseApi", this.$baseApi)
     },
     methods: {
         getData() {

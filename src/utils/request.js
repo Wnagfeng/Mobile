@@ -18,7 +18,7 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     if (Cookies.get('Token')) {
-      config.headers['Authorization'] = 'Bearer ' + Cookies.get('Token')
+      config.headers['Authorization'] = 'Bearer ' + "1123131"
       config.headers['Content-Type'] = 'application/json'
     }
     return config

@@ -208,7 +208,8 @@ export default {
                     totalPrice: 200,
                     payPrice: 190, // 优惠券后的价格
                     couponPrice: 10, // 优惠价格
-                    payPostage: 10 // 运费
+                    payPostage: 10, // 运费
+                    payIntegral: 100 // 需要支付的积分支付
                 }
             },
             userInfo: {
@@ -235,14 +236,14 @@ export default {
                     productInfo: {
                         storeInfo: "另一商品描述信息",
                         storeName: "商品名称B",
-                        isIntegral: 1,
+                        isIntegral: 0,
                         image: "productB.jpg",
                         attrInfo: {
                             integral: 200,
                             sku: "蓝色 M"
                         }
                     },
-                    truePrice: 0 // 通过积分支付
+                    truePrice: 100 // 通过积分支付
                 }
             ], //购物车商品列表
             loading: false,
