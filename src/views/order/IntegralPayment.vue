@@ -1,6 +1,27 @@
 <!-- 积分支付页面 -->
 <template>
     <div class="warpper">
+        <van-cell is-link @click="addressShow = true" v-if="!addressInfo">
+            <template #title>
+                <span class="custom-title">请选择地址 </span>
+            </template>
+        </van-cell>
+        <van-cell is-link @click="addressShow = true" v-if="addressInfo">
+            <template #title>
+                <span class="custom-title">{{ addressInfo.realName }}</span>
+                <span class="custom-title" style="margin-left: 8px;">{{ addressInfo.phone }}</span>
+            </template>
+            <template #label>
+                <span class="custom-title">{{ addressInfo.province + ' ' + addressInfo.district + '
+                '+addressInfo.city}}</span>
+            </template>
+        </van-cell>
+        <van-popup v-model="addressShow" round position="bottom" :style="{ height: '40%' }">
+            <van-contact-card type="add" @click="onAdd" />
+            <template v-for="item in addressList">
+                <van-contact-card type="edit" :name="item.realName" :tel="item.phone" @click="address(item)" />
+            </template>
+        </van-popup>
         <!-- 商品信息 -->
         <template v-for="(item, index) in cartInfo" v-if="cartInfo.length > 0">
             <van-card :num="item.cartNum" :desc="item.productInfo.storeInfo" :title="item.productInfo.storeName"

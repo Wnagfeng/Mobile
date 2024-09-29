@@ -13,7 +13,7 @@
             </template>
             <template #label>
                 <span class="custom-title">{{ addressInfo.province + ' ' + addressInfo.district + '
-                    '+addressInfo.city}}</span>
+                '+addressInfo.city}}</span>
             </template>
         </van-cell>
         <van-popup v-model="addressShow" round position="bottom" :style="{ height: '40%' }">
@@ -82,6 +82,17 @@
                     </template>
                     <template #right-icon>
                         <van-radio name="1"></van-radio>
+                    </template>
+                </van-cell>
+                <van-cell center icon="shop-o">
+                    <template #title>
+                        <span class="custom-title">微信</span>
+                    </template>
+                    <template #label>
+                        <span class="custom-title">暂未开通</span>
+                    </template>
+                    <template #right-icon>
+                        <van-radio name="1" disabled></van-radio>
                     </template>
                 </van-cell>
             </van-radio-group>

@@ -29,8 +29,7 @@
                     </span>
                 </van-grid-item>
             </van-grid>
-
-            <van-divider v-if="list.length > 9">点击加载更多</van-divider>
+            <div class="loadMore" v-if="list.length > 9" @click="loadMore">点击加载更多</div>
         </div>
     </div>
 </template>
@@ -51,6 +50,76 @@ export default {
                     price: 199.00,
                     integral: 200 // 如果是积分兑换商品，显示积分
                 },
+                {
+                    id: 1,
+                    storeName: "产品A",
+                    image: "https://example.com/imageA.jpg",
+                    price: 199.00,
+                    integral: 200 // 如果是积分兑换商品，显示积分
+                },
+                {
+                    id: 1,
+                    storeName: "产品A",
+                    image: "https://example.com/imageA.jpg",
+                    price: 199.00,
+                    integral: 200 // 如果是积分兑换商品，显示积分
+                },
+                {
+                    id: 1,
+                    storeName: "产品A",
+                    image: "https://example.com/imageA.jpg",
+                    price: 199.00,
+                    integral: 200 // 如果是积分兑换商品，显示积分
+                },
+                {
+                    id: 1,
+                    storeName: "产品A",
+                    image: "https://example.com/imageA.jpg",
+                    price: 199.00,
+                    integral: 200 // 如果是积分兑换商品，显示积分
+                },
+                {
+                    id: 1,
+                    storeName: "产品A",
+                    image: "https://example.com/imageA.jpg",
+                    price: 199.00,
+                    integral: 200 // 如果是积分兑换商品，显示积分
+                },
+                {
+                    id: 1,
+                    storeName: "产品A",
+                    image: "https://example.com/imageA.jpg",
+                    price: 199.00,
+                    integral: 200 // 如果是积分兑换商品，显示积分
+                },
+                {
+                    id: 1,
+                    storeName: "产品A",
+                    image: "https://example.com/imageA.jpg",
+                    price: 199.00,
+                    integral: 200 // 如果是积分兑换商品，显示积分
+                },
+                {
+                    id: 1,
+                    storeName: "产品A",
+                    image: "https://example.com/imageA.jpg",
+                    price: 199.00,
+                    integral: 200 // 如果是积分兑换商品，显示积分
+                },
+                {
+                    id: 1,
+                    storeName: "产品A",
+                    image: "https://example.com/imageA.jpg",
+                    price: 199.00,
+                    integral: 200 // 如果是积分兑换商品，显示积分
+                },
+                {
+                    id: 1,
+                    storeName: "产品A",
+                    image: "https://example.com/imageA.jpg",
+                    price: 199.00,
+                    integral: 200 // 如果是积分兑换商品，显示积分
+                },
             ],
             imgUrls: this.$baseApi,
             salesSort: 'desc',
@@ -64,6 +133,10 @@ export default {
         this.getdata()
     },
     methods: {
+        loadMore() {
+            this.limit += 10; // 每次加载10条数据
+            this.getdata(this.name, this.val, this.limit); // 重新调用getdata
+        },
         goto(data) {
             this.$router.push({
                 name: 'ProductDetails',
@@ -124,5 +197,12 @@ export default {
 .warpper {
     background-color: #F8F8F8;
     padding: 5px;
+    padding-bottom: 70px;
+}
+
+.loadMore {
+    margin-top: 15px;
+    text-align: center;
+    color: #333;
 }
 </style>
