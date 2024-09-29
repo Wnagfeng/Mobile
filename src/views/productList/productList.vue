@@ -146,6 +146,7 @@ export default {
             });
         },
         onClick(name, title) {
+            console.log('点击了标签', name, title)
             if (name == 1) {
                 this.move()
             } else if (name == 2) {
@@ -177,6 +178,7 @@ export default {
             }
             this.name = name
             this.val = val
+            this.getdata(this.name, this.val, this.limit); // 在这里调用 getdata
         },
         getdata(name, val, limit) {
             let map = {}
