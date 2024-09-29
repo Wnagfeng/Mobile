@@ -1,138 +1,43 @@
-<!-- 包含积分商品的支付和余额支付 -->
+<!-- 积分支付页面 -->
 <template>
     <div class="warpper">
-        <template>
-            <van-cell is-link @click="addressShow = true" v-if="!addressInfo">
-                <template #title>
-                    <span class="custom-title">请选择地址 </span>
-                </template>
-            </van-cell>
-            <van-cell is-link @click="addressShow = true" v-if="addressInfo">
-                <template #title>
-                    <span class="custom-title">{{ addressInfo.realName }}</span>
-                    <span class="custom-title" style="margin-left: 8px;">{{ addressInfo.phone }}</span>
-                </template>
-                <template #label>
-                    <span class="custom-title">{{ addressInfo.province + ' ' + addressInfo.district + '
-                    '+addressInfo.city}}</span>
-                </template>
-            </van-cell>
-
-            <van-popup v-model="addressShow" round position="bottom" :style="{ height: '40%' }">
-                <van-contact-card type="add" @click="onAdd" />
-                <template v-for="item in addressList">
-                    <van-contact-card type="edit" :name="item.realName" :tel="item.phone" @click="address(item)" />
-                </template>
-            </van-popup>
-            <!-- 商品信息 -->
-            <template v-for="(item, index) in cartInfo" v-if="cartInfo.length > 0">
-                <van-card :num="item.cartNum" :desc="item.productInfo.storeInfo" :title="item.productInfo.storeName"
-                    style="background-color: #fff;" :thumb="imgUrls + item.productInfo.image">
-                    <template #price>
-                        <span v-if="item.productInfo.isIntegral == 1">
-                            <font size="4" color="#ED6A0C">{{ item.productInfo.attrInfo.integral }}</font>
-                            <font size="3" color="#ED6A0C">积分</font>
-                        </span>
-                        <span v-else>
-                            <font size="3" color="#ED6A0C">￥</font>
-                            <font size="4" color="#ED6A0C">{{ item.truePrice }}</font>
-                        </span>
-                    </template>
-                    <template #tags>
-                        <van-tag plain type="danger">{{ item.productInfo.attrInfo.sku }}</van-tag>
-
-                    </template>
-                </van-card>
-            </template>
-            <!--  list  在不启用积分支付时显示优惠券相关的内容-->
-            <van-cell title="优惠券" is-link @click="showList = true" v-if="!enableIntegral">
-                <template #default v-if="couponInfo">
+        <!-- 商品信息 -->
+        <template v-for="(item, index) in cartInfo" v-if="cartInfo.length > 0">
+            <van-card :num="item.cartNum" :desc="item.productInfo.storeInfo" :title="item.productInfo.storeName"
+                style="background-color: #fff;" :thumb="imgUrls + item.productInfo.image">
+                <template #price>
                     <span>
-                        <font size="2" color="#cccccc">已减{{ couponInfo.couponPrice }}</font>
+                        <font size="4" color="#ED6A0C">{{ item.productInfo.attrInfo.integral }}</font> 积分
                     </span>
                 </template>
-            </van-cell>
-            <van-popup v-model="showList" round position="bottom" :style="{ height: '30%', background: '#f5f5f5' }">
-                <van-cell center class="discount" @click="" v-for="(item, index) in couponList" :key="index"
-                    @click="ckCoupon(item)">
-                    <template #title>
-                        <span style="margin-left: 10px;">{{ item.couponTitle }}</span><br />
-                        <span style="margin-left: 10px;">
-                            <font size="2" color="#cccccc">满{{ item.useMinPrice }}减{{ item.couponPrice }}</font>
-                        </span>
-                    </template>
-                    <template #label>
-                        <font style="margin-left: 10px;" size="3" color="#ff5a5f">{{ item.endTime }} 到期</font>
-                    </template>
-                    <template #icon>
-                        <font size="2" color="#ff5a5f">￥</font>
-                        <font size="6" color="#ff5a5f">{{ item.couponPrice }}</font>
-                    </template>
-                </van-cell>
-
-            </van-popup>
-            <!-- price info -->
-            <template v-if="priceInfo.result">
-                <!-- 当不启用积分支付时，显示商品的价格信息 -->
-                <van-cell title="商品价格" :value="priceInfo.result.totalPrice" v-if="!enableIntegral" />
-                <!-- 用户启用了积分支付时显示商品的价格信息 是积分不是价格 -->
-                <van-cell title="商品价格" :value="priceInfo.result.payIntegral + '积分'" v-if="enableIntegral" />
-                <!-- 不启用积分支付的情况下显示优惠券相关的优惠金额 -->
-                <van-cell title="优惠" :value="priceInfo.result.couponPrice" v-if="!enableIntegral" />
-                <van-cell title="运费" :value="priceInfo.result.payPostage > 0 ? priceInfo.result.payPostage : '免邮费'" />
-                <van-field v-model="mark" label="备注" placeholder="请输入备注" />
-                </van-cell>
-            </template>
-            <!-- pay select -->
-            <!-- 不使用积分支付 -->
-            <div class="pay" v-if="!enableIntegral">
-                <van-radio-group v-model="radio">
-                    <van-cell center icon="shop-o">
-                        <template #title>
-                            <span class="custom-title">余额</span>
-                        </template>
-                        <template #label>
-                            <span class="custom-title">￥{{ userInfo.nowMoney }}</span>
-                        </template>
-                        <template #right-icon>
-                            <van-radio name="1"></van-radio>
-                        </template>
-                    </van-cell>
-                    <van-cell center icon="shop-o">
-                        <template #title>
-                            <span class="custom-title">微信</span>
-                        </template>
-                        <template #label>
-                            <span class="custom-title">暂未开通</span>
-                        </template>
-                        <template #right-icon>
-                            <van-radio name="1" disabled></van-radio>
-                        </template>
-                    </van-cell>
-                </van-radio-group>
-            </div>
-            <!-- 使用积分支付 -->
-            <div v-else class="pay">
-                <van-radio-group v-model="radio">
-                    <van-cell center icon="shop-o">
-                        <template #title>
-                            <span class="custom-title">剩余积分</span>
-                        </template>
-                        <template #default>
-                            <span class="custom-title">{{ userInfo.integral }}</span>
-                        </template>
-                        <template #right-icon>
-                            <van-radio name="1"></van-radio>
-                        </template>
-                    </van-cell>
-                </van-radio-group>
-            </div>
-            <van-submit-bar v-if="priceInfo.result && !enableIntegral" :price="priceInfo.result.payPrice * 100"
-                button-text="提交订单" @submit="createOrder" />
-            <van-submit-bar v-if="priceInfo.result && enableIntegral" :price="priceInfo.result.payIntegral * 100"
-                button-text="提交订单" @submit="createOrder" />
+                <template #tags>
+                    <van-tag plain type="danger">{{ item.productInfo.attrInfo.sku }}</van-tag>
+                </template>
+            </van-card>
         </template>
 
+        <!-- 价格信息 -->
+        <van-cell title="商品价格" :value="priceInfo.result.payIntegral + '积分'" />
+        <van-cell title="运费" :value="priceInfo.result.payPostage > 0 ? priceInfo.result.payPostage : '免邮费'" />
+        <van-field v-model="mark" label="备注" placeholder="请输入备注" />
+
+        <!-- 支付选择 -->
+        <div class="pay">
+            <van-radio-group v-model="radio">
+                <van-cell center icon="shop-o">
+                    <template #title>
+                        <span class="custom-title">剩余积分</span>
+                    </template>
+                    <template #label>
+                        <span class="custom-title">{{ userInfo.integral }}</span>
+                    </template>
+                    <template #right-icon>
+                        <van-radio name="1"></van-radio>
+                    </template>
+                </van-cell>
+            </van-radio-group>
+        </div>
+        <van-submit-bar :price="priceInfo.result.payIntegral * 100" button-text="提交订单" @submit="createOrder" />
     </div>
 </template>
 

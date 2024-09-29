@@ -121,7 +121,7 @@ export const constantRouterMap = [{
         {
             path: '/createOrder',
             name: 'createOrder',
-            component: () => import('../views/order/createOrder.vue'),
+            component: () => import('../views/order/BalancePayment.vue'),
             meta: {
                 title: '创建订单',
                 keepAlive: false,
