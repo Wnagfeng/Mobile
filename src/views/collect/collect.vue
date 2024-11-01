@@ -44,7 +44,22 @@ import { getCollect, delCollects } from '../../api/collect'
 export default {
     data() {
         return {
-            list: [],
+            list: [
+                {
+                    id: 1,
+                    image: "https://ts1.cn.mm.bing.net/th/id/R-C.0bb5b865aac87f09eda036384bee5335?rik=F2SVhS8ESYTDXA&riu=http%3a%2f%2fk.sinaimg.cn%2fn%2fsinakd20231130ac%2f178%2fw822h956%2f20231130%2f8ab0-7cac5b733beb2a6372b587707f2be3dc.jpg%2fw700d1q75cms.jpg%3fby%3dcms_fixed_width&ehk=xP2eCjeI4qfzndnq3BykPRCveOPhZWjImWQROlekSGg%3d&risl=&pid=ImgRaw&r=0",
+                    storeName: "iPhone 16 Pro Max",
+                    price: "12999",
+                    otPrice: "13999",
+                },
+                {
+                    id: 2,
+                    image: "https://ts1.cn.mm.bing.net/th/id/R-C.0bb5b865aac87f09eda036384bee5335?rik=F2SVhS8ESYTDXA&riu=http%3a%2f%2fk.sinaimg.cn%2fn%2fsinakd20231130ac%2f178%2fw822h956%2f20231130%2f8ab0-7cac5b733beb2a6372b587707f2be3dc.jpg%2fw700d1q75cms.jpg%3fby%3dcms_fixed_width&ehk=xP2eCjeI4qfzndnq3BykPRCveOPhZWjImWQROlekSGg%3d&risl=&pid=ImgRaw&r=0",
+                    storeName: "iPhone 16 Pro Max",
+                    price: "12999",
+                    otPrice: "13999",
+                },
+            ],
             isshow: false,
             text: '管理',
             limit: 0,
