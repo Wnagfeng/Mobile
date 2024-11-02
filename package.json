@@ -1,8 +1,11 @@
 {
   "name": "mobile",
   "version": "0.0.1",
-  "author": "CoderJoon",
   "private": true,
+  "description": "Skills Contest – PC",
+  "author": "CoderJoon",
+  "license": "MIT",
+  "main": "index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
