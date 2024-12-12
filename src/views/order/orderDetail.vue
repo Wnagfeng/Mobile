@@ -56,7 +56,8 @@ export default {
                 // 模拟数据
                 statusDto: {
                     title: '待付款',
-                    payType: '微信支付'
+                    payType: '微信支付',
+                    msg: "订单状态"
                 },
                 cartInfo: [
                     {
@@ -129,10 +130,11 @@ export default {
 
     .top {
         background: url('../../static/userBg.png') no-repeat center center;
-        height: 90px;
+        height: 180px;
 
         .title {
             line-height: 90px;
+            height: 100px;
             text-align: center;
             font-size: 18px;
             color: white;
@@ -144,7 +146,7 @@ export default {
             border-top-right-radius: 16px;
             transform: translateY(1px);
             box-sizing: border-box;
-            padding: 15px;
+            padding: 20px;
         }
     }
 

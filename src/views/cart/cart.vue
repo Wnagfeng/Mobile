@@ -23,7 +23,7 @@
                             </span>
                         </template>
                         <template #footer>
-                            <van-stepper v-model="item.cartNum" integer @change="onChange" :value="changevalue"
+                            <van-stepper v-model="item.cartNum" integer @change="onChange" value="changevalue"
                                 @plus="itemId = item.id" @minus="itemId = item.id" @focus="itemId = item.id" />
                         </template>
                         <template #tag>
@@ -90,20 +90,41 @@ export default {
         },
         //获取点击的name 复选框
         toggle(name, money) {
-            for (let i = 0; i < this.list.length; i++) {
-                if (this.list[i] == name) {
-                    this.ckAll = false
-                    this.money = this.money - money
-                    this.list.splice(i, 1);
-                    name = null
-                    this.value = false
-                    return
-                }
+            // 更新全选状态
+            // 更新全选状态
+            // this.ckAll = this.list.length === this.cartList.filter(item => item.productInfo.isIntegral != 1 && item.combinationId == 0).length;
+            // console.log("当前全选状态为：", this.ckAll = this.list.length === this.cartList.length && this.cartList.length > 0)
+            // for (let i = 0; i < this.list.length; i++) {
+            //     if (this.list[i] == name) {
+            //         this.ckAll = false
+            //         this.money = this.money - money
+            //         this.list.splice(i, 1);
+            //         name = null
+            //         this.value = false
+            //         return
+            //     }
+            // }
+            // if (name != null) {
+            //     this.list.push(name)
+            //     this.money = this.money + money
+            // }
+            const index = this.list.indexOf(name);
+            if (index > -1) {
+                // 取消选中
+                this.list.splice(index, 1);
+                this.money -= money;
+            } else {
+                // 选中
+                this.list.push(name);
+                this.money += money;
             }
-            if (name != null) {
-                this.list.push(name)
-                this.money = this.money + money
-            }
+
+            // 更新全选状态
+            const validItems = this.cartList.filter(item =>
+                item.productInfo.isIntegral != 1 && item.combinationId == 0
+            );
+            this.value = validItems.length > 0 && this.list.length === validItems.length;
+
         },
         ////修改购物车数量
         onChange(value) {
@@ -113,22 +134,21 @@ export default {
                     this.money = this.money + item.truePrice * item.cartNum
                 }
             })
-
+            // 请求打开loding
             this.$toast.loading({
                 forbidClick: true
             });
-            let vm = this
-            clearTimeout(vm.timer);
-            vm.timer = setTimeout(() => {
-                vm.$toast.clear();
-                vm.changevalue = value;
-                if (vm.changevalue > 0 && vm.itemId != null) {
-                    upCartNum({
-                        number: vm.changevalue,
-                        id: vm.itemId
-                    }).then(res => { })
-                }
-            }, 500);
+
+            this.changevalue = value;
+            if (this.changevalue > 0 && this.itemId != null) {
+                upCartNum({
+                    number: this.changevalue,
+                    id: this.itemId
+                }).then(res => { })
+            }
+
+            console.log("当前总金额:", this.money);
+            console.log("更新的值:", value, "商品ID:", this.itemId);
 
 
         },

@@ -77,6 +77,7 @@ export default {
             }
         },
 
+
         submit() {
             let addressInfo = {
                 id: this.$route.params.id == null ? null : this.$route.params.id,
@@ -86,19 +87,25 @@ export default {
                 post_code: this.post_code,
                 is_default: this.checked,
                 address: {
-                    city: this.addressList[2].name,
-                    district: this.addressList[1].name,
-                    province: this.addressList[0].name,
+                    province: this.addressList[0]?.name || "",
+                    city: this.addressList[2]?.name || "",
+                    district: this.addressList[1]?.name || "",
                 }
+
             }
+            // Validation
             if (!addressInfo.real_name) {
                 this.$toast("请填写收货人姓名");
                 return;
             }
-            if (!/(^1[3|4|5|7|8][0-9]{9}$)/.test(addressInfo.phone)) {
+            // 13开头 
+            const isValidPhone = (phone) => /^1[3-9]\d{9}$/.test(phone);
+
+            if (!isValidPhone(addressInfo.phone)) {
                 this.$toast("请填正确的电话号码");
                 return;
             }
+
             if (!addressInfo.detail) {
                 this.$toast("请填写详细地址");
                 return;
@@ -136,8 +143,6 @@ export default {
             this.addressList = data
             this.addressShow = false
         },
-        onSave(contactInfo) { },
-        onDelete(contactInfo) { },
     },
 };
 </script>
